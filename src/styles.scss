@@ -1,0 +1,298 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap');
+
+$background: #3f51b5;
+$color: #e8ebff;
+$string: #00c4ff;
+$number: #f44336;
+$boolean: #8bc34a;
+$object: #ffc107;
+$undefined: #e91e63;
+
+%equal-heights {
+	flex-wrap: wrap;
+	float: left;
+	height: 100%;
+	width: calc(100% / 2);
+}
+
+%fonts {
+	font-size: 14px;
+	font-weight: normal;
+	font-family: 'Source Code Pro', monospace;
+	line-height: 1.3;
+	letter-spacing: 1.4px;
+}
+
+%scrollbar {
+	overflow-y: auto;
+
+	&::-webkit-scrollbar {
+		width: 10px;
+		background: darken($background, 20%);
+	}
+
+	&::-webkit-scrollbar-corner {
+		background: darken($background, 20%);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: darken($background, 10%);
+	}
+}
+
+/** Base typography
+-------------------- */
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+html {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	box-sizing: border-box;
+	font-size: 85%;
+	font-family: serif;
+}
+
+html,
+body {
+	height: 100%;
+	position: relative;
+}
+
+/** body
+-------------------- */
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+	text-rendering: optimizeLegibility;
+	font-family: 'Poppins', sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 1.5em;
+}
+
+/** App
+--------------------------*/
+body {
+	overflow: hidden;
+	background: darken($background, 30%);
+}
+
+.app {
+	padding: 0;
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+	background: darken($background, 40%);
+	box-shadow: 0px 3px 3px darken($background, 40%);
+	border-radius: 4px;
+	border: 2px solid darken($background, 20%);
+
+	max-width: 760px;
+	max-height: 480px;
+	margin: 3rem auto;
+
+	@media (max-width: 760px) {
+		box-shadow: none;
+		border-radius: 0;
+		border: none;
+
+		max-width: 100%;
+		max-height: 100%;
+		margin: 0;
+	}
+}
+.header {
+	height: 2.6rem;
+	background: darken($background, 20%);
+	overflow: hidden;
+	font-size: 14px;
+	font-weight: 700;
+	user-select: none;
+
+	.left {
+		float: left;
+		width: 7rem;
+	}
+
+	.right {
+		float: right;
+		width: 7em;
+		text-align: right;
+	}
+
+	.center {
+		width: calc(100% - 20rem);
+		height: 2.6rem;
+		display: block;
+		padding: 0.2em;
+		float: left;
+		span {
+			display: block;
+			text-align: center;
+			margin: 0.4rem;
+			text-transform: capitalize;
+			color: $boolean;
+			animation: fade 1s 1 ease;
+			@keyframes fade {
+				from {
+					opacity: 0;
+				}
+			}
+		}
+	}
+
+	a {
+		display: inline-block;
+		text-decoration: none;
+		transition: background 500ms ease;
+		margin: 0.2rem 0;
+		padding: 0.5rem 1rem;
+		color: $color;
+		&:first-child {
+			margin-left: 0.2rem;
+		}
+		svg {
+			stroke: darken($color, 10%);
+			stroke-width: 1px;
+		}
+		&:hover,
+		&:focus {
+			transition: background 500ms ease;
+			background: darken($background, 12%);
+		}
+	}
+}
+.content {
+	display: flex;
+	overflow: hidden;
+	height: calc(100% - 2.6rem);
+
+	#log {
+		margin: 0;
+		@extend %equal-heights;
+		word-break: break-word;
+		white-space: pre-wrap;
+		@extend %fonts;
+		@extend %scrollbar;
+		padding: 0.5rem;
+		background: darken($background, 35%);
+		color: $color;
+		
+		a{
+			color: darken($color,10%);
+		}
+
+		.log-string {
+			color: $string;
+		}
+
+		.log-number {
+			color: $number;
+		}
+
+		.log-boolean {
+			color: $boolean;
+		}
+
+		.log-object {
+			color: $object;
+		}
+
+		.log-undefined {
+			color: $undefined;
+			font-weight: bold;
+		}
+	}
+
+	#editor {
+		@extend %equal-heights;
+		resize: none;
+		border: none;
+		outline: none;
+		white-space: pre-wrap;
+		padding: 0;
+		transition: background 500ms ease;
+		background: darken($background, 30%);
+		color: $color;
+
+
+		.CodeMirror {
+			line-height: 1.5;
+			width: 100%;
+			height: 100%;
+			font-family: 'Source Code Pro', monospace;
+			box-shadow: 2px 2px 10px #111139 inset;
+			font-weight: bolder;
+			font-size: 13px;
+			letter-spacing: 1.5px;
+			transition: background 500ms ease;
+			background: darken($background, 30%);
+			color: $color;
+			.CodeMirror-linenumber {
+				color: white;
+			}
+			.CodeMirror-cursor {
+				border-left: 1px solid white;
+			}
+			.CodeMirror-scroll,
+			.CodeMirror-vscrollbar,
+			.CodeMirror-hscrollbar {
+				@extend %scrollbar;
+			}
+		}
+		.cm-s-material-palenight {
+			background: darken($background, 30%);
+			color: $color;
+			height: 100%;
+
+			.CodeMirror-gutter {
+				background: #171e44;
+				border-right: 1px solid #111631;
+				user-select: none;
+			}
+
+			&:hover,
+			&:focus {
+				transition: background 500ms ease;
+				outline: none;
+				background: darken($background, 32%);
+			}
+		}
+	}
+}
+.clearing {
+	animation: clear 800ms ease;
+}
+@keyframes clear {
+	from {
+		background: white;
+	}
+}
+.gutter {
+	background-color: darken($background, 36%);
+	background-repeat: no-repeat;
+	background-position: 50%;
+	cursor: e-resize;
+	.gutter-vertical {
+		background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=");
+	}
+
+	.gutter-horizontal {
+		background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==");
+	}
+}
